@@ -46,17 +46,17 @@ func decodePoString(text string) string {
 }
 
 func encodePoString(text string) string {
+	// Quick exit
+	if text == "" {
+		return "\"\"\n"
+	}
+
 	var buf bytes.Buffer
+
 	lines := strings.Split(text, "\n")
-	for i := 0; i < len(lines); i++ {
-		if lines[i] == "" {
-			if i != len(lines)-1 {
-				buf.WriteString(`"\n"` + "\n")
-			}
-			continue
-		}
+	for i, line := range lines {
 		buf.WriteRune('"')
-		for _, r := range lines[i] {
+		for _, r := range line {
 			switch r {
 			case '\\':
 				buf.WriteString(`\\`)
@@ -70,7 +70,11 @@ func encodePoString(text string) string {
 				buf.WriteRune(r)
 			}
 		}
-		buf.WriteString(`\n"` + "\n")
+		if i == len(lines)-1 {
+			buf.WriteString("\"\n")
+		} else {
+			buf.WriteString(`\n"` + "\n")
+		}
 	}
 	return buf.String()
 }

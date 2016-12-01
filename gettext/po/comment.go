@@ -245,11 +245,9 @@ func (p Comment) String() string {
 		}
 	}
 	if a, b := len(p.ReferenceFile), len(p.ReferenceLine); a != 0 && a == b {
-		fmt.Fprintf(&buf, "#:")
 		for i := 0; i < len(p.ReferenceFile); i++ {
-			fmt.Fprintf(&buf, " %s:%d", p.ReferenceFile[i], p.ReferenceLine[i])
+			fmt.Fprintf(&buf, "#: %s:%d\n", p.ReferenceFile[i], p.ReferenceLine[i])
 		}
-		fmt.Fprintf(&buf, "\n")
 	}
 	if len(p.Flags) != 0 {
 		fmt.Fprintf(&buf, "#, %s", p.Flags[0])
