@@ -54,6 +54,11 @@ func encodePoString(text string) string {
 	var buf bytes.Buffer
 
 	lines := strings.Split(text, "\n")
+	// Start with empty "" when doing multiple lines
+	if len(lines) > 1 {
+		buf.WriteString("\"\"\n")
+	}
+
 	for i, line := range lines {
 		buf.WriteRune('"')
 		for _, r := range line {
